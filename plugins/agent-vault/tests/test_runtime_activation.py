@@ -823,7 +823,10 @@ def test_installed_reader_resolves_owner_without_payload_or_source(tmp_path, lay
         (slot.parent.parent / "current-version").write_text("1.0.0", encoding="utf-8")
     installed = packages["agent-vault"] / "agent_vault"
     installed.mkdir()
-    for name in ("__init__.py", "config.py", "configuration.py", "configuration_scope.py", "invocation.py", "_peer_launch.py"):
+    for name in (
+        "__init__.py", "config.py", "configuration.py", "configuration_scope.py",
+        "default_owner.py", "invocation.py", "_peer_launch.py",
+    ):
         shutil.copyfile(PLUGIN / "src" / "agent_vault" / name, installed / name)
     if layout == "service-cwd":
         shutil.copytree(
@@ -1010,8 +1013,10 @@ def test_cold_namespaced_capture_and_legacy_capture_keep_slots(tmp_path, layout)
                 bootstrap.mkdir()
                 for source in (PLUGIN / "scripts").glob("versioned_runtime*.py"):
                     shutil.copyfile(source, bootstrap / source.name)
-            for filename in ("__init__.py", "config.py", "configuration.py",
-                             "configuration_scope.py", "invocation.py", "_peer_launch.py"):
+            for filename in (
+                "__init__.py", "config.py", "configuration.py", "configuration_scope.py",
+                "default_owner.py", "invocation.py", "_peer_launch.py",
+            ):
                 shutil.copyfile(PLUGIN / "src" / name / filename, package / filename)
             for source in (PLUGIN / "src" / name).glob("_installation_context*.py"):
                 shutil.copyfile(source, package / source.name)
