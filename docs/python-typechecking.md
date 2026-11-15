@@ -74,7 +74,11 @@ owners. Every selected file must pass strict checking; existing diagnostics are
 not grandfathered or filtered to changed lines. Staged, unstaged and untracked
 files are included, even when `--head` pins the comparison. Deleted files are
 not checked. PR CI compares its base with the checked-out merge commit, not
-the unmerged feature tip, so unrelated base-only files are not treated as
+the unmerged feature tip. The comparison base is the synthetic merge commit's
+immutable first parent, not an older PR merge-base SHA; unrelated upstream
+changes must not enter this PR's ratchet cohort. For a busy shared local clone,
+pin the synchronization/merge-base commit instead of a moving `origin/dev`
+reference while checking a fixed feature tip, so unrelated base-only files are not treated as
 developer drift. Known Installation Context, Harness and Payload Invocation
 compositions expand to their existing complete checker programs and declared
 analysis targets; changed shell/template inputs cannot omit those views.
